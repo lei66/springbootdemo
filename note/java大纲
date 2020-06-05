@@ -1,0 +1,114 @@
+一 jdk和jre和jvm的关系
+    jdk:java开发工具包，包含jre
+    jre:java运行时环境(类加载器等)，包含jvm
+    jvm:java虚拟机
+
+二 java基本语法
+    1.java文件可以有多个类，但只能有一个公共类（public）修饰
+    2.java成员变量和局部变量
+    3.java基本数据类型：四类八种
+    4.java关键字，命名规范
+    5.代码块和静态代码块
+    6.修饰符private,default,protect,public修饰变量和类
+        外部类只能用public
+    7.static和final关键字作用
+        final修饰类，修饰变量，修饰方法，修饰入参
+
+三 java继承，接口，抽象类，内部类
+    1.父类子类关系
+    2.重写和重载关系
+    3.接口和抽象类区别
+        接口变量相当于public static final修饰
+    4.内部类：lamda表达式
+    5.多态特点
+        成员变量：编译运行看左边
+        成员方法：编译看左边，运行看右边
+    6.向下转型时，用instanceof来判断合适不合适
+
+    7.String类
+
+四 java集合
+    1.Collection
+        List
+            ArrayList：数组
+                数组结构便于查询，有序
+                add时会检查数组大小，当长度满时容量扩大1.5倍。
+
+            LinkedList:双向链表
+                链表结构便于增删，有序
+                含有头尾两个指针，并且双向，使用更方便（例如：插入会判断从头查找还是从尾查找）。
+        Set
+            HashSet
+                hash表，无序
+    2.Map
+        HashMap
+            hash表： 负载因子0.75（防止hash碰撞），扩容增大到原来两倍（扩容复制时可减少移动）
+        ConcurrentHashMap
+            分段锁segments数组初始化后，个数就不会再变
+五 java IO
+    1.基本io
+        主要分为字节流和字符流，字符流是转化流的子类
+            字节流：InputStream OutputStream
+            字符流：Reader Writer
+            转化流：InputStreamReader OutputStreamWriter
+        字符流
+            用来接收的数组是char[],用默认的编码对字节进行了编码
+    2.网络io
+
+六 java多线程
+    1.线程状态
+        新建-就绪-运行-死亡-阻塞
+    2.创建多线程的方式
+
+    3.线程的同步
+        synchronized和lock区别
+            每个对象都维护一个monitor
+            lock维护AQS:公平锁：从队列中取线程
+                        非公平锁：大几率新来的线程获取锁，队列中的第一个线程要释放锁；
+
+    4.线程通信
+        notify()/wait()
+        阻塞队列
+
+    5.线程池
+        1.为什么不能用java工具类线程池：
+            这里说一下原理先，为什么不能这么创建。
+
+            先说说newFixedThreadPool和newSingleThreadExecutor这两个
+
+            这两个用来存储线程的队列是无界的，这个影响的话，如果极端情况下，线程被占满，请求一直进来，就会造成队列中一直堆积。这种情况很容易就造成oom了，所以这种非常不安全，pass掉！
+
+            再说说newCachedThreadPool和newScheduledThreadPool这两个
+
+            这两个线程池的数量是Integer.MAX_VALUE，每次来一个任务，通过底层你可以看到，是new了一个线程进行执行，不复用，非常的浪费资源，这和自己每次去new线程没什么区别。创建的线程太多的话，就会造成OOM，所以这两种也pass掉
+
+
+    6.juc
+
+
+七 java反射
+    1.类加载过程
+        加载，解析，初始化
+    2.类加载器
+        根加载器，扩展加载器，系统加载器
+    3.获取Class类的三种方式
+    4.通过反射使用private方法
+        需要开启暴力访问：method.setAccessible(true)
+
+     5.对象的浅克隆和深克隆
+         浅克隆：对象里引用类型数据不新建
+         深克隆：对象里引用类型数据也会新建
+八 java注解
+    1.四个元注解：
+        @Target（METHOD，FIELD） @Retention（RUNTIME，CLASS）
+        @Documented：文档标注 @Inherited：子类是否继承注解
+
+九 java异常
+    主要分为运行时异常和编译异常
+
+十 java泛型
+    1.主要分为类的和方法的
+        泛型方法是需要在方法中声明的，例如public <T> T getT()
+        类上声明了泛型T,方法中使用的并不叫泛型方法
+        泛型类作为入参可使用通配符：pubic void get(Fan<?> fan)
+    2.泛型的校验是在编译阶段进行的，运行阶段并不会校验

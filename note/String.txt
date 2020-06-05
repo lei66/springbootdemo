@@ -1,0 +1,11 @@
+String,StringBuilder,StringBuffer
+
+    1.String不可变（final修饰）原因
+        1.使用StringPool
+        2.hash值计算一次即可
+        3.可以保证线程安全
+
+    2.String
+        String s = new String("");会在堆中创建一个对象，然后调用string的intern方法去看
+        常量池有无此字符串，没有则在常量池添加
+        StringBuiler是提高可变字符串的效率，所以不会去常量池创建。
